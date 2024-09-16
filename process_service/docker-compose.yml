@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  api1:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    expose:
+      - 5000
+    networks:
+      - proxy
+
+  api2:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    expose:
+      - 5000
+    networks:
+      - proxy
+
+  api3:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    expose:
+      - 5000
+    networks:
+      - proxy
+
+  haproxy:
+    depends_on:
+      - api1
+      - api2
+      - api3
+    image: haproxy:latest
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - "8088:80"
+      - "70:70" # haproxy admin
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    driver: bridge
