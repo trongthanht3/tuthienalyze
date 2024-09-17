@@ -2,3 +2,6 @@ venv/
 .ipynb_checkpoints/
 __pycache__/
 output/
+scripts/final.json
+scripts/node_modules/
+scripts/build/
